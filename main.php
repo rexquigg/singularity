@@ -243,7 +243,7 @@ function find_address( $seeking ) {
   $hash160 = $bitcoin->addressToHash160( $seeking );
   $length = strlen($hash160);
   if( ! ($length == 40 ) ) {
-    echo $length." data length impossible: ";
+    echo $length." hash length impossible: ";
   }
 
   return $bitcoin->hash160ToAddress( $hash160 );
