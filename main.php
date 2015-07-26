@@ -230,6 +230,7 @@ class Bitcoin {
   }
 }
 
+
 $bitcoin = new Bitcoin();
 
 function find_address( $seeking ) {
@@ -239,23 +240,15 @@ function find_address( $seeking ) {
   if( ! $decoded ) {
     return "invalid characters";
   }
-
-  $hash160 = $bitcoin->addressToHash160( $seeking );
-  $length = strlen($hash160);
-  if( ! ($length == 40 ) ) {
-    echo $length." hash length impossible: ";
+  $length = strlen($decoded);
+  if( ! ($length == 50 ) ) {
+    return $length." data length impossible";
   }
 
+  $hash160 = substr($decoded, 2, 40);
   return $bitcoin->hash160ToAddress( $hash160 );
 }
 
+echo find_address( "1BitcoinEaterAddressDontSendd11111" ), "\n";
 
-
-echo find_address( "11111111111111111111111111111a1234" ), "\n";
-echo find_address( "1a11111111111111111114oLvT2" ), "\n";
-echo find_address( "1001111111111111111111111111111111" ), "\n";
-echo find_address( "1111111111111111111114oLvT2" ), "\n";
-echo find_address( "11111111111111111111BZbvjr" ), "\n";
-echo find_address( "1CfoVZ9eMbESQia3WiAfF4dtpFdUQ8uBUz" ), "\n";
-echo find_address( "1E3d6EWLgwisXY2CWXDcdQQP2ivRN7e9r9" ), "\n";
-echo find_address( "1Aaaeee111ac1111e1111111111HeBAGj" ), "\n";
+echo find_address( "1a11a11aa1aa11a111a111a111aaaaaT2" ), "\n";
