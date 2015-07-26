@@ -37,9 +37,9 @@ class Bitcoin {
    *
    * @param string $hex
    * @return int
-   * @access private
+   * @access public
    */
-  private function decodeHex($hex) {
+  public function decodeHex($hex) {
     $hex = strtoupper($hex);
     $return = "0";
     for ($i = 0; $i < strlen($hex); $i++) {
@@ -55,9 +55,9 @@ class Bitcoin {
    *
    * @param int $dec
    * @return string
-   * @access private
+   * @access public
    */
-  private function encodeHex($dec) {
+  public function encodeHex($dec) {
     $return = "";
     while (bccomp($dec, 0) == 1) {
       $dv = (string) bcdiv($dec, "16", 0);
@@ -73,7 +73,7 @@ class Bitcoin {
    *
    * @param string $base58
    * @return string
-   * @access private
+   * @access public
    */
   public function decodeBase58($base58) {
     $origbase58 = $base58;
@@ -109,7 +109,7 @@ class Bitcoin {
    *
    * @param string $hex
    * @return string
-   * @access private
+   * @access public
    */
   public function encodeBase58($hex) {
     if (strlen($hex) % 2 != 0) {
@@ -197,9 +197,9 @@ class Bitcoin {
    *
    * @param string $data
    * @return string
-   * @access private
+   * @access public
    */
-  private function hash160($data) {
+  public function hash160($data) {
     $data = pack("H*", $data);
     return strtoupper(hash("ripemd160", hash("sha256", $data, true)));
   }
@@ -232,12 +232,30 @@ class Bitcoin {
 
 $bitcoin = new Bitcoin();
 
-function build_digest( $address ) {
+function find_address( $seeking ) {
   global $bitcoin;
 
-  $decoded = $bitcoin->decodeBase58($address);
+  $decoded = $bitcoin->decodeBase58( $seeking );
+  if( ! $decoded ) {
+    return "invalid characters";
+  }
 
+  $hash160 = $bitcoin->addressToHash160( $seeking );
+  $length = strlen($hash160);
+  if( ! ($length == 40 ) ) {
+    echo $length." data length impossible: ";
+  }
+
+  return $bitcoin->hash160ToAddress( $hash160 );
 }
 
-//1E3d6EWLgwisXY2CWXDcdQQP2ivRN7e9r9
-//build_digest( "1E3d6EWLgwisXY2CWXDcdQQP2ivRN7" );
+
+
+echo find_address( "11111111111111111111111111111a1234" ), "\n";
+echo find_address( "1a11111111111111111114oLvT2" ), "\n";
+echo find_address( "1001111111111111111111111111111111" ), "\n";
+echo find_address( "1111111111111111111114oLvT2" ), "\n";
+echo find_address( "11111111111111111111BZbvjr" ), "\n";
+echo find_address( "1CfoVZ9eMbESQia3WiAfF4dtpFdUQ8uBUz" ), "\n";
+echo find_address( "1E3d6EWLgwisXY2CWXDcdQQP2ivRN7e9r9" ), "\n";
+echo find_address( "1Aaaeee111ac1111e1111111111HeBAGj" ), "\n";
