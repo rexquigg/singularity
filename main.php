@@ -257,7 +257,12 @@ function find_address( $seeking ) {
 //test if passed valiation
 //recursive call start on rest of string
 
+$common6 = file_get_contents( 'common6.txt' );
+$common7 = file_get_contents( 'common7.txt' );
+
 function capitalizeAndFind( $goal, $start ) {
+  global $common6, $common7;
+
   // add capitalization at start point
   $split = substr( $goal, $start );
   $newGoal = substr( $goal, 0, $start ) . ucfirst($split);
@@ -270,7 +275,8 @@ function capitalizeAndFind( $goal, $start ) {
   $result = find_address( $newGoal );
 
   if( $result ) {
-    if( ! strcasecmp( substr( $result, 28 ), "weaLth" ) ) {
+    if( (stripos( $common6, substr( $result, 28 ) ) !== false ) ||
+      (stripos( $common7, substr( $result, 28 ) ) !== false ) ) {
       echo $result, "\n";
     }
 
@@ -283,8 +289,3 @@ function capitalizeAndFind( $goal, $start ) {
 $goal = "1LuckybitcoinaddressbringingweaLth";
 
 capitalizeAndFind( $goal, 2 );
-//echo find_address( $goal );
-
-
-
-// test: 2Jy5ZJ
