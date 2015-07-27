@@ -249,19 +249,11 @@ function find_address( $seeking ) {
   return $bitcoin->hash160ToAddress( $hash160 );
 }
 
-//echo find_address( "1BitcoinEaterAddressDontSendd11111" ), "\n";
-//echo find_address( "1a11a11aa1aa11a111a111a111aaaaaT2" ), "\n";
-
-//prefer 34 characters
-//capitalize each character, test if valid
-//test if passed valiation
-//recursive call start on rest of string
 
 $common6 = file_get_contents( 'common6.txt' );
-$common7 = file_get_contents( 'common7.txt' );
 
 function capitalizeAndFind( $goal, $start ) {
-  global $common6, $common7;
+  global $common6;
 
   // add capitalization at start point
   $split = substr( $goal, $start );
@@ -272,12 +264,8 @@ function capitalizeAndFind( $goal, $start ) {
 
   if( $result ) {
     $last6 = substr( $result, -6 );
-    $last7 = substr( $result, -7 );
 
     if( stripos( $common6, $last6 ) !== false ) {
-      echo $result, "\n";
-    }
-    else if(stripos( $common7, $last7 ) !== false ) {
       echo $result, "\n";
     }
 
@@ -287,6 +275,14 @@ function capitalizeAndFind( $goal, $start ) {
   }
 }
 
-$goal = "1LuckybitcoinaddressbringingweaLth";
 
-capitalizeAndFind( $goal, 1 );
+$goal = find_address( $argv[1] );
+
+if( $goal ) {
+  echo "Seeking Address Matching: ", $goal, "\n\n";
+  capitalizeAndFind( $goal, 1 );
+}
+else {
+  echo "Error: Missing or invalid address pattern...\n";
+  echo "Use: ", $argv[0], " 1PartiaLaddressearchargument999999\n";
+}
