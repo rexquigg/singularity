@@ -238,17 +238,53 @@ function find_address( $seeking ) {
 
   $decoded = $bitcoin->decodeBase58( $seeking );
   if( ! $decoded ) {
-    return "invalid characters";
+    return false; //"invalid characters";
   }
   $length = strlen($decoded);
   if( ! ($length == 50 ) ) {
-    return $length." data length impossible";
+    return false; //$length." data length impossible";
   }
 
   $hash160 = substr($decoded, 2, 40);
   return $bitcoin->hash160ToAddress( $hash160 );
 }
 
-echo find_address( "1BitcoinEaterAddressDontSendd11111" ), "\n";
+//echo find_address( "1BitcoinEaterAddressDontSendd11111" ), "\n";
+//echo find_address( "1a11a11aa1aa11a111a111a111aaaaaT2" ), "\n";
 
-echo find_address( "1a11a11aa1aa11a111a111a111aaaaaT2" ), "\n";
+//prefer 34 characters
+//capitalize each character, test if valid
+//test if passed valiation
+//recursive call start on rest of string
+
+function capitalizeAndFind( $goal, $start ) {
+  // add capitalization at start point
+  $split = substr( $goal, $start );
+  $newGoal = substr( $goal, 0, $start ) . ucfirst($split);
+
+  if( $newGoal == $goal ) { //letter was already forced capital
+    return;
+  }
+
+  // generate address with correct checksum
+  $result = find_address( $newGoal );
+
+  if( $result ) {
+    if( ! strcasecmp( substr( $result, 28 ), "weaLth" ) ) {
+      echo $result, "\n";
+    }
+
+    for( $i=$start+1; $i<28; $i++) {
+      $result = capitalizeAndFind( $newGoal, $i );
+    }
+  }
+}
+
+$goal = "1LuckybitcoinaddressbringingweaLth";
+
+capitalizeAndFind( $goal, 2 );
+//echo find_address( $goal );
+
+
+
+// test: 2Jy5ZJ
