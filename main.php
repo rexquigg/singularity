@@ -275,8 +275,13 @@ function capitalizeAndFind( $goal, $start ) {
   $result = find_address( $newGoal );
 
   if( $result ) {
-    if( (stripos( $common6, substr( $result, 28 ) ) !== false ) ||
-      (stripos( $common7, substr( $result, 28 ) ) !== false ) ) {
+    $last6 = substr( $result, -6 );
+    $last7 = substr( $result, -7 );
+
+    if( stripos( $common6, $last6 ) !== false ) {
+      echo $result, "\n";
+    }
+    else if(stripos( $common7, $last7 ) !== false ) {
       echo $result, "\n";
     }
 
