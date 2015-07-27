@@ -267,10 +267,6 @@ function capitalizeAndFind( $goal, $start ) {
   $split = substr( $goal, $start );
   $newGoal = substr( $goal, 0, $start ) . ucfirst($split);
 
-  if( $newGoal == $goal ) { //letter was already forced capital
-    return;
-  }
-
   // generate address with correct checksum
   $result = find_address( $newGoal );
 
@@ -293,4 +289,4 @@ function capitalizeAndFind( $goal, $start ) {
 
 $goal = "1LuckybitcoinaddressbringingweaLth";
 
-capitalizeAndFind( $goal, 2 );
+capitalizeAndFind( $goal, 1 );
