@@ -25,7 +25,7 @@ and be 34 characters long to pass this requirement.
 
 ## Sample Output
 
-```
+``` console
 user@host:~/source/singularity$ php singularity.php 1PartiaLaddressearchargument999999
 Seeking Address Matching: 1PartiaLaddressearchargumentChre18
 
